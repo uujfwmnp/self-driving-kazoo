@@ -8,6 +8,9 @@ musicLocation = 'F:/iRacing/Local Forecast - Elevator.mp3'
 
 ir = irsdk.IRSDK()
 ir.startup()
+# Testing: Comment the above two lines, uncomment the two below
+#ir = {}
+#sess_flag = ir['SessionFlags'] = 268452352
 pygame.init() # Initialize pygame
 mixer.init()  # Initialize pygame mixer
 
