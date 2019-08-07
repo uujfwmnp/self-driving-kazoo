@@ -4,9 +4,12 @@ import time
 from pygame import mixer
 from irsdk import Flags
 
+musicLocation = 'F:/iRacing/Local Forecast - Elevator.mp3'
+
+ir = irsdk.IRSDK()
+ir.startup()
 pygame.init() # Initialize pygame
 mixer.init()  # Initialize pygame mixer
-musicLocation = 'F:/iRacing/Local Forecast - Elevator.mp3'
 
 def flagSet(flagType):
     if (sess_flag & flagType): # If the current "SessionFlags" contains the required flag type, return True
@@ -31,7 +34,7 @@ def cautionMusic():
             else:
                 time.sleep(5) # Wait 5 seconds before checking session flags again
     except KeyboardInterrupt:
-        print("Ending Program\n")
+        print('Ending Program\n')
         quit()
     pass
 
