@@ -24,17 +24,21 @@ def cautionMusic(sessionFlag):
 
 def stopPlayback():
     print('One Lap To Green, Stopping Music')
-    mixer.music.fadeout(5000) # Five second long fadeout, then music stops
-    time.sleep(6) # This keeps the function from being repeatedly called during the fadeout
+    if (mixer.music.get_busy() == True):
+        mixer.music.fadeout(5000) # Five second long fadeout, then music stops
+        time.sleep(6) # This keeps the function from being repeatedly called during the fadeout
+    else:
+        print('Music is stopped')
+        time.sleep(10) # This keeps the function from being repeatedly called during the fadeout
 
 def flagStatus(sessionFlag):
     if (sessionFlag & Flags.one_lap_to_green): # I don't think I need this anymore, since the cautionMusic function handles it all.
         stopPlayback()
-    elif (sessionFlag & Flags.caution): # If the sessionFlag decimal contains the Caution flag in hex, call the function below
+    elif (sessionFlag & Flags.caution) or (sessionFlag & Flags.caution_waving): # If the sessionFlag decimal contains the Caution flag in hex, call the function below
         cautionMusic(sessionFlag)
     else:
         print('Not under caution, sleeping')
-        time.sleep(5) # Wait 5 seconds before checking session flags again
+        time.sleep(10) # Wait 5 seconds before checking session flags again
 
 try:
     while True:
