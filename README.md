@@ -10,11 +10,11 @@ Silly little Python file to fill your iPacing caution laps with beautiful music.
 ### To use:
  - Run `pip install pyirsdk` to install the Python iRacing SDK module
  - Run `pip install -U pygame --user` to install the pygame module
- - Edit the "musicLocation" variable (currently on line 7) to point to the song you want to play 
+ - Edit the "musicLocation" variable (currently on line 7) to point to the songs you want to play. Be sure to include the full path to each song, if they are not located in the same directory as this script.
  - Run the iRacing program
  - Run `python kazoo.py` to start the script
  
  ### Notes:
- - It sort of works, but only under controlled testing conditions.
- - The code probably needs a rewrite.
- - It has not been tested live on iRacing yet.
+ - ~~It works, but only under controlled testing conditions.~~ It works for sure with ovals, unsure how it will react on road courses that do not have full course cautions.
+ - ~~The code probably needs a rewrite.~~ It did, and it was.
+ - ~~It has not been tested live on iRacing yet.~~ Works fine for ovals.
