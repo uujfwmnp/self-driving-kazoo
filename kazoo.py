@@ -1,11 +1,16 @@
 import irsdk
 import pygame
 import time, random
+import m3u8
 from pygame import mixer
 from irsdk import Flags
 
-musicLocation = ['foo.wav', 'bar.mp3', 'foobar.m4a']
-# Be sure to put the full path to each file, if it's not in the same directory as this script
+playlistLocation = 'C:/path/to/file.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
+m3u = m3u8.load(playlistLocation)
+
+# If you still want to use the old version, comment the line below, and uncomment the one two lines below.
+musicLocation = m3u.segments.uri
+# musicLocation = ['foo.wav', 'bar.mp3', 'foobar.m4a'] # Be sure to put the full path to each file
 
 ir = irsdk.IRSDK()
 ir.startup()
