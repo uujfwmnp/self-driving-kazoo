@@ -15,6 +15,10 @@ Silly little Python file to fill your iPacing caution laps with beautiful music.
  - Edit the "musicLocation" variable to point to your m3u/m3u8 playlist, be sure to include the full path to the file.
  - Run the iRacing program
  - Run `python kazoo.py` to start the script
+ - Press Control-C to stop the script, or just close the terminal window I suppose.
+ 
+ ### Test Mode:
+ - If you find yourself wanting to run the script without being ingame, edit the "test" variable from `False` to `True`. This can be useful for people wanting to set audio levels or test other things prior to live use in game.
  
  ### Notes:
  - ~~It works, but only under controlled testing conditions.~~ It works for sure with ovals, unsure how it will react on road courses that do not have full course cautions.
