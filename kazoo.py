@@ -5,6 +5,7 @@ import m3u8
 from pygame import mixer
 from irsdk import Flags
 
+test = False # Set to True for test mode, False for live
 playlistLocation = 'C:/path/to/file.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
 m3u = m3u8.load(playlistLocation)
 
@@ -12,9 +13,6 @@ m3u = m3u8.load(playlistLocation)
 musicLocation = m3u.segments.uri
 # musicLocation = ['foo.wav', 'bar.mp3', 'foobar.m4a'] # Be sure to put the full path to each file
 
-ir = irsdk.IRSDK()
-ir.startup()
-# Testing: Comment the above two lines, uncomment the two in the try: section at the bottom below
 mixer.init()  # Initialize pygame mixer
 
 def cautionMusic(sessionFlag):
@@ -47,12 +45,25 @@ def flagStatus(sessionFlag):
 
 try:
     while True:
-#        ir = {}
-#        sessionFlag = ir['SessionFlags'] = int(open("!flag.txt", "r").read()) # 268451840=caution 268452352=one_lap_to_green
-        sessionFlag = ir['SessionFlags']
-        print(sessionFlag)
-        flagStatus(sessionFlag)
-        time.sleep(1)
+        if test == True:
+            print('\n -------------------------------------------------------------')
+            print('| Test mode enabled. Please press control-c to stop playback. |')
+            print(' -------------------------------------------------------------\n')
+            ir = {}
+            sessionFlag = ir['SessionFlags'] = 268451840 # 268451840=caution 268452352=one_lap_to_green
+            flagStatus(sessionFlag)
+            time.sleep(1)
+        else:
+            ir = irsdk.IRSDK()
+            ir.startup()
+            if (ir.startup()) == False:
+                print("Game Ain't Running!")
+                exit()
+            else:
+                sessionFlag = ir['SessionFlags']
+                print(sessionFlag)
+                flagStatus(sessionFlag)
+                time.sleep(1)
 except KeyboardInterrupt:
     print("Ending Program\n")
     quit()
