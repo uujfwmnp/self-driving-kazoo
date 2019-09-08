@@ -1,35 +1,35 @@
-import irsdk
-import pygame
-import time, random
-import m3u8
+import time, random, os
+import irsdk, pygame, mutagen, m3u8
 from pygame import mixer
 from irsdk import Flags
+from mutagen.mp3 import MP3
 
-test = False # Set to True for test mode, False for live
-playlistLocation = 'C:/path/to/file.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
+test = True # Set to True for test mode, False for live
+playlistLocation = 'D:/python/!GitHub Files/test2.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
+
 m3u = m3u8.load(playlistLocation)
-
-# If you still want to use the old version, comment the line below, and uncomment the one two lines below.
 musicLocation = m3u.segments.uri
-# musicLocation = ['foo.wav', 'bar.mp3', 'foobar.m4a'] # Be sure to put the full path to each file
-
-mixer.init()  # Initialize pygame mixer
 
 def cautionMusic(sessionFlag):
     print('Caution Is Waving, Playing Music')
-    mixer.music.load(random.choice(musicLocation)) # Load a random song from the list
+    song = random.choice(musicLocation) # Choose a random song
+    mp3 = MP3(song) # Parse the song headers 
+    mixer.init(frequency=mp3.info.sample_rate) # Initialize pygame mixer using the correct frequency/sample rate
+    mixer.music.load(song) # Load a random song from the list
     mixer.music.play() # Play!
     while mixer.music.get_busy():
         pygame.time.delay(100) # This prevents the chosen song from stopping too soon.
         sessionFlag = ir['SessionFlags'] # This should hopefully update from live data
         if (sessionFlag & Flags.one_lap_to_green):
             stopPlayback()
+    mixer.quit() # Unload the mixer
 
 def stopPlayback():
     print('One Lap To Green, Stopping Music')
     if (mixer.music.get_busy() == True):
         mixer.music.fadeout(5000) # Five second long fadeout, then music stops
         time.sleep(6) # This keeps the function from being repeatedly called during the fadeout
+        mixer.quit() # Unload the mixer
     else:
         print('Music is stopped')
         time.sleep(10) # This keeps the function from being repeatedly called during the fadeout
@@ -43,12 +43,14 @@ def flagStatus(sessionFlag):
         print('Not under caution, sleeping')
         time.sleep(10) # Wait 5 seconds before checking session flags again
 
+if test == True:
+    print('\n -------------------------------------------------------------')
+    print('| Test mode enabled. Please press control-c to stop playback. |')
+    print(' -------------------------------------------------------------\n')
+
 try:
     while True:
         if test == True:
-            print('\n -------------------------------------------------------------')
-            print('| Test mode enabled. Please press control-c to stop playback. |')
-            print(' -------------------------------------------------------------\n')
             ir = {}
             sessionFlag = ir['SessionFlags'] = 268451840 # 268451840=caution 268452352=one_lap_to_green
             flagStatus(sessionFlag)
