@@ -3,6 +3,8 @@ import irsdk, pygame, mutagen, m3u8
 from pygame import mixer
 from irsdk import Flags
 from mutagen.mp3 import MP3
+from mutagen.mp4 import MP4
+from mutagen.oggvorbis import OggVorbis
 
 test = True # Set to True for test mode, False for live
 playlistLocation = 'C:/path/to/playlist.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
@@ -10,11 +12,23 @@ playlistLocation = 'C:/path/to/playlist.m3u' # Yeah, you need to convert \ to / 
 m3u = m3u8.load(playlistLocation)
 musicLocation = m3u.segments.uri
 
+def SampleRate(ext,song): # To return a sample rate/frequency based on the file extension
+    if (ext == '.mp3'):
+        mp3 = MP3(song)
+        rate = mp3.info.sample_rate
+    elif (ext == '.mp4' or ext == '.m4a'): #m4a/mp4 is currently not supported by pygame
+        mp4 = MP4(song)
+        rate = mp4.info.sample_rate
+    elif (ext == '.ogg'):
+        ogg = OggVorbis(song)
+        rate = ogg.info.sample_rate
+    return rate
+
 def cautionMusic(sessionFlag):
     print('Caution Is Waving, Playing Music')
     song = random.choice(musicLocation) # Choose a random song
-    mp3 = MP3(song) # Parse the song headers 
-    mixer.init(frequency=mp3.info.sample_rate) # Initialize pygame mixer using the correct frequency/sample rate
+    name, ext = os.path.splitext(song) # Split the extension from the song title
+    mixer.init(frequency=SampleRate(ext,song)) # Initialize pygame mixer using the SampleRate function
     mixer.music.load(song) # Load a random song from the list
     mixer.music.play() # Play!
     while mixer.music.get_busy():
