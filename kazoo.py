@@ -10,12 +10,17 @@ playlistLocation = 'C:/path/to/playlist.m3u' # Yeah, you need to convert \ to / 
 m3u = m3u8.load(playlistLocation)
 musicLocation = m3u.segments.uri
 
+def FilePrep(song): # Because VLC likes to save playlists in browser-friendly formats, but pygame can't read them.
+    stripURI = song.strip('file:///')
+    fixSpaces = stripURI.replace('%20',' ')
+    return fixSpaces
+
 def cautionMusic(sessionFlag):
     print('Caution Is Waving, Playing Music')
     song = random.choice(musicLocation) # Choose a random song
-    mp3 = MP3(song) # Parse the song headers 
+    mp3 = MP3(FilePrep(song)) # Parse the song headers 
     mixer.init(frequency=mp3.info.sample_rate) # Initialize pygame mixer using the correct frequency/sample rate
-    mixer.music.load(song) # Load a random song from the list
+    mixer.music.load(FilePrep(song)) # Load a random song from the list
     mixer.music.play() # Play!
     while mixer.music.get_busy():
         pygame.time.delay(100) # This prevents the chosen song from stopping too soon.
