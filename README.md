@@ -4,13 +4,15 @@ Silly little Python file to fill your iPacing caution laps with beautiful music.
 ### Requirements:
  - Python 3.4 or newer
  - PyYAML 3.11 or newer
- - m3u8 0.3.12 or newer
+ - [m3u8](https://github.com/globocom/m3u8) 0.3.12 or newer
+ - [mutagen](https://github.com/quodlibet/mutagen) 1.42.0 or newer
  - [Python iRacing SDK](https://github.com/kutu/pyirsdk)
- - [pygame](https://www.pygame.org/)
+ - [pygame](https://www.pygame.org/) 1.9.6 or newer
 
 ### To use:
  - Run `pip install pyirsdk` to install the Python iRacing SDK module
  - Run `pip install m3u8` to install the m3u8 parser module
+ - Run `pip install mutagen` to install the mutagen id3 parser module
  - Run `pip install -U pygame --user` to install the pygame module
  - Edit the "musicLocation" variable to point to your m3u/m3u8 playlist, be sure to include the full path to the file.
  - Run the iRacing program
