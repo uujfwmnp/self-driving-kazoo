@@ -5,7 +5,7 @@ from irsdk import Flags
 from mutagen.mp3 import MP3
 
 test = True # Set to True for test mode, False for live
-playlistLocation = 'D:/python/!GitHub Files/test2.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
+playlistLocation = 'C:/path/to/playlist.m3u' # Yeah, you need to convert \ to / for Windows, sorry.
 
 m3u = m3u8.load(playlistLocation)
 musicLocation = m3u.segments.uri
