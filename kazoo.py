@@ -71,7 +71,7 @@ try:
                 exit()
             else:
                 sessionFlag = ir['SessionFlags']
-                print(sessionFlag)
+                #print(sessionFlag)
                 flagStatus(sessionFlag)
                 time.sleep(1)
 except KeyboardInterrupt:
