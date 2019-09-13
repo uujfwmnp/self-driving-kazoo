@@ -14,7 +14,7 @@ Silly little Python file to fill your iPacing caution laps with beautiful music.
  - Run `pip install m3u8` to install the m3u8 parser module
  - Run `pip install mutagen` to install the mutagen id3 parser module
  - Run `pip install -U pygame --user` to install the pygame module
- - Edit the "musicLocation" variable to point to your m3u/m3u8 playlist, be sure to include the full path to the file.
+ - Edit the "playlistLocation" variable to point to your m3u/m3u8 playlist, be sure to include the full path to the file.
  - Run the iRacing program
  - Run `python kazoo.py` to start the script
  - Press Control-C to stop the script, or just close the terminal window I suppose.
