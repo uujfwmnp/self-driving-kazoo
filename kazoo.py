@@ -67,8 +67,8 @@ try:
             ir = irsdk.IRSDK()
             ir.startup()
             if (ir.startup()) == False:
-                print("Game Ain't Running!")
-                exit()
+                print("iRacing is not running or not fully loaded, sleeping 15 seconds. . . ")
+                time.sleep(15)
             else:
                 sessionFlag = ir['SessionFlags']
                 #print(sessionFlag)
