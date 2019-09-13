@@ -32,7 +32,7 @@ def cautionMusic(sessionFlag):
         if (sessionFlag & Flags.one_lap_to_green):
             stopPlayback()
             break # End the while loop
-    if (mixer.music.get_busy() == False): # This occurs after a song ends, but not due to one to green
+    if (mixer.get_init() != None) and (mixer.music.get_busy() == False): # This occurs after a song ends, but not due to one to green
         mixer.quit() # Unloads the mixer, required to re-initialize with new sample rates
 
 def stopPlayback():
