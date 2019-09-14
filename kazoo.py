@@ -25,14 +25,15 @@ def cautionMusic(sessionFlag):
     mixer.music.play() # Play!
     while mixer.music.get_busy():
         pygame.time.delay(100) # This prevents the chosen song from stopping too soon.
-        if test == True:
+        if (test == True):
             sessionFlag = ir['SessionFlags'] = int(open(testFile, 'r').read())
         else:
             sessionFlag = ir['SessionFlags'] # This should hopefully update from live data
         if (sessionFlag & Flags.one_lap_to_green):
             stopPlayback()
             break # End the while loop
-    if (mixer.get_init() != None) and (mixer.music.get_busy() == False): # This occurs after a song ends, but not due to one to green
+    time.sleep(0.5)
+    if (mixer.get_init() == True) and (mixer.music.get_busy() == False): # This occurs if a song ends while still under caution
         mixer.quit() # Unloads the mixer, required to re-initialize with new sample rates
 
 def stopPlayback():
@@ -51,14 +52,14 @@ def flagStatus(sessionFlag):
         print('Not under caution, sleeping')
         time.sleep(10) # Wait 10 seconds before checking session flags again
 
-if test == True:
+if (test == True):
     print('\n -------------------------------------------------------------')
     print('| Test mode enabled. Please press control-c to stop playback. |')
     print(' -------------------------------------------------------------\n')
 
 try:
     while True:
-        if test == True:
+        if (test == True):
             ir = {}
             sessionFlag = ir['SessionFlags'] = int(open(testFile, 'r').read())
             flagStatus(sessionFlag)
@@ -67,7 +68,7 @@ try:
             ir = irsdk.IRSDK()
             ir.startup()
             if (ir.startup()) == False:
-                print("iRacing is not running or not fully loaded, sleeping 15 seconds. . . ")
+                print('iRacing is not running or not fully loaded, sleeping 15 seconds. . . ')
                 time.sleep(15)
             else:
                 sessionFlag = ir['SessionFlags']
