@@ -19,12 +19,11 @@ ir = irsdk.IRSDK()
 def write_id3(song):
     try:
         audio = ID3(song)
-    except ID3NoHeaderError:
-        #write filename instead
-        with open('file.txt', 'w') as file:
+    except ID3NoHeaderError: # If there are no ID3 tags, write filename instead
+        with open('ID3file.txt', 'w') as file:
             file.write(os.path.basename(song))
     else:
-        if any(tags not in audio for tags in ('TIT2','TPE1')): #If Artist or Title tag missing
+        if any(tags not in audio for tags in ('TIT2','TPE1')): # If Artist or Title tag missing
             #write filename instead
             with open('ID3file.txt', 'w') as file:
                 file.write(os.path.basename(song))
